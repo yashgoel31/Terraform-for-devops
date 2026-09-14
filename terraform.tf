@@ -6,13 +6,14 @@ terraform {
     }
   }
 
+# This backend for the state management and in this we use only the S3 bucket for the state management, for the locking use of the DynamoDB we use dynamodb_table="name".
   backend "s3" {
 
     bucket       = "remote-infra-state-bucket"
     key          = "terraform.tfstate"
     region       = "us-east-1"
     use_lockfile = true
-    # dynamodb_table was deprecated.
+    # dynamodb_table was deprecated.(Use if you want to use the DynamoDB table for state locking)
   }
 }
 
