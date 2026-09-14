@@ -1,9 +1,13 @@
 #Key pair (login)
 
 resource "aws_key_pair" "my_key" {
-  key_name   = "terra-key-ec2"
+  key_name   = "${var.env}-terra-key-ec2"
   public_key = file("terra-key-ec2.pub")
   #Here we use the file fuction to avoid the hardcode key and out of the screen line.
+
+  tags = {
+    Environment = var.env
+  }
 }
 
 #VPC (Virtual Private Cloud) & Security Group
@@ -13,7 +17,7 @@ resource "aws_default_vpc" "default" {
 
 #Security group
 resource "aws_security_group" "my_security_group" {
-  name        = "automate-sg"
+  name        = "${var.env}-automate-sg"
   description = "This will add a TF generated security group"
   vpc_id      = aws_default_vpc.default.id #interpolation
 
@@ -56,7 +60,8 @@ resource "aws_security_group" "my_security_group" {
 
   # Tags are the key-value pairs that help you identify your AWS resources. You can use tags to categorize your resources in different ways, for example, by purpose, owner, or environment.
   tags = {
-    Name = "automate-sg"
+    Name        = "${var.env}-automate-sg"
+    Environment = var.env
   }
 }
 
@@ -93,7 +98,7 @@ resource "aws_instance" "my_instance" {
   }
 
   tags = {
-    Name = each.key
+    Name        = each.key
     Environment = var.env
   }
 }

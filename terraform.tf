@@ -6,7 +6,7 @@ terraform {
     }
   }
 
-# This backend for the state management and in this we use only the S3 bucket for the state management, for the locking use of the DynamoDB we use dynamodb_table="name".
+  # This backend for the state management and in this we use only the S3 bucket for the state management, for the locking use of the DynamoDB we use dynamodb_table="name".
   backend "s3" {
 
     bucket       = "remote-infra-state-bucket"

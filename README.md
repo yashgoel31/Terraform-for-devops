@@ -6,12 +6,17 @@ This repository is a practice project for learning the basics of Terraform and u
 
 When applied in an AWS account, this configuration is intended to create:
 
-- An EC2 `t3.micro` instance in the `eu-west-1` region
-- An AWS key pair named `terra-key-ec2` for EC2 login
-- A default VPC security group named `automate-sg`
+- Two EC2 `t3.micro` instances in the `eu-west-1` region
+- An AWS key pair named `<env>-terra-key-ec2` for EC2 login
+- A default VPC security group named `<env>-automate-sg`
 - A security group rule allowing SSH on port 22, HTTP on port 80, and application traffic on port 8000
 - An S3 bucket named `yashgoel-terraform-bucket`
 - A local file named `automate.txt` containing sample text
+
+The default environment is `dev`. Set another environment during planning or
+apply, for example `terraform plan -var="env=prd"`. Production instances use
+the configured `ec2_root_storage_size` value of 20 GB; other environments use
+the default root storage size of 10 GB.
 
 ## Repository Files
 
@@ -19,7 +24,7 @@ When applied in an AWS account, this configuration is intended to create:
 | --- | --- |
 | `provider.tf` | Configures the AWS provider and selects the `eu-west-1` region. |
 | `terraform.tf` | Declares the required AWS provider version and contains setup notes. |
-| `ec2.tf` | Defines the EC2 key pair, default VPC, security group, and EC2 instance. |
+| `ec2.tf` | Defines the environment-tagged EC2 key pair, default VPC, security group, and two EC2 instances. |
 | `s3.tf` | Defines the S3 bucket. |
 | `main.tf` | Defines a local file resource created by Terraform. |
 | `terra-key-ec2.pub` | Public SSH key used to create the AWS key pair. |
